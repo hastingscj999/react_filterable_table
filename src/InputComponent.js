@@ -12,16 +12,41 @@ class InputComponent extends Component {
     const showHide = e.target.nextSibling.nextSibling;
     if (e.target.checked) {
       showHide.style.visibility = 'visible';
-      this.props.material.addFilter(e.target.nextSibling);
+      this.props.methods.addFilter(e.target.nextSibling);
     } else {
       showHide.value = '';
-      this.props.material.removeFilter(e.target.nextSibling);
+      this.props.methods.removeFilter(e.target.nextSibling);
       showHide.style.visibility = 'hidden';
     }
   }
 
+  componentDidMount(){
+    // const baseArr =  document.querySelectorAll('.toggleInput');
+    // for (let i in baseArr) {
+    //   let candidate = baseArr[i];
+    //   if(candidate.id){
+    //     const key = String(candidate.id.trim().replace(' ', '_').toLowerCase());
+    //     const baseline = JSON.parse(sessionStorage.myState);
+    //     console.log(baseline.inputs[key]);
+    //     if (baseline.inputs[key] !== '') {
+    //       candidate.checked = true;
+    //     } else {
+    //       candidate.checked = false;
+    //     }
+    //   }
+    //   // if(candidate.checked){
+    //   //     this.props.filterList.indexOf(candidate.id) > -1 ? candidate.checked = true : candidate.checked = false
+    //   // }
+    // }
+    // for (let field in document.querySelectorAll('input[type=text]')){
+    //   console.log(field);
+    //   debugger;
+    //   field.value !== '' ? field.style.visibility : !field.style.visibility
+    // }
+  }
+
   handleChange(e) {
-    this.props.material.updateValues(e.target.previousSibling.nodeValue, e.target.value);
+    this.props.methods.updateValues(e.target.previousSibling.nodeValue, e.target.value);
   }
 
 
@@ -30,19 +55,19 @@ class InputComponent extends Component {
         <form name='filterInputs'>
           <h2>Filter by:</h2>
           <p>
-            <input type='checkbox' id='first_name' value='enableFirstName' onChange={this.toggleInput} /> First Name <input type='text'  name='myinput' className='inputToggle' value={this.props.material.inputs.first_name} onChange={this.handleChange} />
+            <input type='checkbox' className='toggleInput' id='first_name' value='enableFirstName' onChange={this.toggleInput} /> First Name <input type='text' className='inputToggle' value={this.props.material.inputs.first_name} onChange={this.handleChange} />
           </p>
           <p>
-            <input type='checkbox'  id='last_name' value='enableLasttName' onChange={this.toggleInput} /> Last Name <input type='text' className='inputToggle' value={this.props.material.inputs.last_name} onChange={this.handleChange} />
+            <input type='checkbox'  id='last_name' className='toggleInput' value='enableLasttName' onChange={this.toggleInput} /> Last Name <input type='text' className='inputToggle' value={this.props.material.inputs.last_name} onChange={this.handleChange} />
           </p>
           <p>
-            <input type='checkbox'  id='email'  value='enableEmailFilter' onChange={this.toggleInput}  /> Email <input type='text' className='inputToggle'value={this.props.material.inputs.email} onChange={this.handleChange}  />
+            <input type='checkbox'  id='email'  className='toggleInput' value='enableEmailFilter' onChange={this.toggleInput}  /> Email <input type='text' className='inputToggle'value={this.props.material.inputs.email} onChange={this.handleChange}  />
           </p>
           <p>
-            <input type='checkbox' id='ip_address' value='enableIPFilter' onChange={this.toggleInput} /> IP Address <input type='text'  className='inputToggle' value={this.props.material.inputs.ip_address} onChange={this.handleChange} />
+            <input type='checkbox' id='ip_address' className='toggleInput' value='enableIPFilter' onChange={this.toggleInput} /> IP Address <input type='text'  className='inputToggle' value={this.props.material.inputs.ip_address} onChange={this.handleChange} />
           </p>
           <p>
-            <input type='checkbox' id='gender' value='enableGenderFilter' onChange={this.toggleInput}  /> Gender <select name='pickGender' className='inputToggle' onChange={this.handleChange} ><option></option><option>Female</option><option>Male</option></select>
+            <input type='checkbox' id='gender' className='toggleInput' value='enableGenderFilter' onChange={this.toggleInput}  /> Gender <select name='pickGender' className='inputToggle' onChange={this.handleChange} ><option></option><option>Female</option><option>Male</option></select>
           </p>
         </form>
      )

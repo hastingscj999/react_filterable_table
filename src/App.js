@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import List from './mock_data2.json';
+import List from './mock_data.json';
 import InputComponent from './InputComponent.js';
 import TableComponent from './TableComponent.js';
 import FilterListComponent from './FilterListComponent.js';
@@ -18,13 +18,15 @@ class App extends Component {
         ip_address: '',
         gender: '',
       },
-      appliedFilters: this.filterList,
+      appliedFilters: this.filterList
+    }
+    this.methods = {
       addFilter: (item) => {
         this.filterList.push(item.nodeValue);
         this.setState({
           appliedFilters: this.filterList
         });
-        let key = item.nodeValue.trim().replace(' ', '_').toLowerCase();
+        const key = item.nodeValue.trim().replace(' ', '_').toLowerCase();
         const target = document.getElementById(key);
         target.checked = true;
         target.nextSibling.nextSibling.style.visibility = 'visible';
@@ -52,22 +54,32 @@ class App extends Component {
         }
         this.setState({
           inputs: inputsCopy
-        })
+        });
+        sessionStorage.setItem('myState', JSON.stringify(this.state));
       }
     }
-    // if(sessionStorage.myState){
-    //     let sessionState = sessionStorage.getItem('myState');
-    //     sessionState = JSON.parse(sessionState);
-    //     console.log(sessionState);
-    //     this.state = sessionState;
-    // }
   };
+
+  componentDidMount(){
+    if(sessionStorage.myState){
+        let sessionState = sessionStorage.getItem('myState');
+        sessionState = JSON.parse(sessionState);
+        console.log('ss', sessionState);
+        this.setState({
+          inputs: sessionState.inputs,
+          appliedFilters: sessionState.appliedFilters
+        });
+        this.filterList = sessionState.appliedFilters
+    } else {
+      console.log('no state set yet');
+    }
+  }
 
 
   areInputsPopulated(){
     const comparator = Object.values(this.state.inputs);
     let arbiter = false;
-    for (let x in comparator){
+    for (let x in comparator) {
       comparator[x].length > 0 ? arbiter = true : null
     }
     return arbiter;
@@ -100,11 +112,10 @@ class App extends Component {
   }
 
   render() {
-    // sessionStorage.setItem('myState', JSON.stringify(this.state));
      return(
        <div id="wrapper">
-        <InputComponent material={this.state} />
-        <FilterListComponent filters={this.filterList} material={this.state} />
+        <InputComponent material={this.state} methods={this.methods} />
+        <FilterListComponent filters={this.filterList} material={this.state} methods={this.methods} />
         <TableComponent list={this.filterTable(List)} />
        </div>
     )
