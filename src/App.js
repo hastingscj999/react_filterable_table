@@ -30,6 +30,7 @@ class App extends Component {
         const target = document.getElementById(key);
         target.checked = true;
         target.nextSibling.nextSibling.style.visibility = 'visible';
+        sessionStorage.setItem('myState', JSON.stringify(this.state));
       },
       removeFilter: (item) => {
         const candidate = this.filterList.indexOf(item.nodeValue);
@@ -43,8 +44,8 @@ class App extends Component {
         const target = document.getElementById(key);
         target.checked = false;
         target.nextSibling.nextSibling.style.visibility = 'hidden';
-
         this.filterList.splice(candidate, 1);
+        sessionStorage.setItem('myState', JSON.stringify(this.state));
       },
       updateValues: (prop, item) => {
         prop = prop.trim().replace(' ', '_').toLowerCase();
@@ -64,9 +65,6 @@ class App extends Component {
     if(sessionStorage.myState){
         let sessionState = sessionStorage.getItem('myState');
         sessionState = JSON.parse(sessionState);
-        // console.log('ss', sessionState);
-        console.log('ssi', sessionState.inputs);
-        console.log('ssa', sessionState.appliedFilters);
 
         this.setState({
           inputs: sessionState.inputs,
@@ -74,7 +72,6 @@ class App extends Component {
           }, () => {
             const baseArr =  document.getElementsByClassName('toggleInput');
             const textInputArr = document.getElementsByClassName('inputToggle');
-            console.log(baseArr.length);
             for (let i in baseArr) {
               let candidate = baseArr[i];
               let candidateInput = textInputArr[i];
@@ -89,8 +86,7 @@ class App extends Component {
               }
             }
         });
-
-        this.filterList = sessionState.appliedFilters
+        this.filterList = sessionState.appliedFilters;
     } else {
       console.log('no state set yet');
     }
