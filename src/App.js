@@ -92,7 +92,6 @@ class App extends Component {
     }
   }
 
-
   areInputsPopulated(){
     const comparator = Object.values(this.state.inputs);
     let arbiter = false;
@@ -133,7 +132,7 @@ class App extends Component {
        <div id="wrapper">
         <InputComponent material={this.state} methods={this.methods} />
         <FilterListComponent filters={this.filterList} material={this.state} methods={this.methods} />
-        <TableComponent list={this.filterTable(List)} />
+        {TableComponent(this.filterTable(List))}
        </div>
     )
   };

@@ -7,25 +7,34 @@ class FilterListComponent extends Component {
   }
 
   refreshFilters(e){
-    this.props.material.removeFilter(e.target.nextSibling.nextSibling);
+    this.props.methods.removeFilter(e.target.nextSibling.nextSibling);
   }
 
-  FilterItem = (data) => {
-    return data.data.map((item) => (
-      <div className='filterItem'><span className='closeButton' onClick={this.refreshFilters}>x</span> {item}</div>
-    ), this);
+  filterItem = (data) => {
+    return data.map((item, index) => (
+      <div className="filterItem" key={index}>
+        <span className="closeButton" onClick={(e) => this.refreshFilters(e)}>x</span>
+        <span>&nbsp;{item}</span>
+      </div>
+    ));
   }
 
   render() {
+    const {
+      material
+    } = this.props;
+
      return (
        <div>
-         <div id='filterListHeading'>Currently applied filters:</div>
-          <div id='filterList'>
-            <this.FilterItem data={this.props.material.appliedFilters} />
+         <div id="filterListHeading">Currently applied filters:</div>
+          <div id="filterList">
+            {this.filterItem(material.appliedFilters)}
           </div>
         </div>
-     )
+     );
   }
 }
+
+// add proptypes
 
 export default FilterListComponent;
