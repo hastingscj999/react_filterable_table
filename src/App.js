@@ -64,11 +64,32 @@ class App extends Component {
     if(sessionStorage.myState){
         let sessionState = sessionStorage.getItem('myState');
         sessionState = JSON.parse(sessionState);
-        console.log('ss', sessionState);
+        // console.log('ss', sessionState);
+        console.log('ssi', sessionState.inputs);
+        console.log('ssa', sessionState.appliedFilters);
+
         this.setState({
           inputs: sessionState.inputs,
           appliedFilters: sessionState.appliedFilters
+          }, () => {
+            const baseArr =  document.getElementsByClassName('toggleInput');
+            const textInputArr = document.getElementsByClassName('inputToggle');
+            console.log(baseArr.length);
+            for (let i in baseArr) {
+              let candidate = baseArr[i];
+              let candidateInput = textInputArr[i];
+              if(candidate.id){
+                if (this.state.inputs[candidate.id] !== '') {
+                  candidate.checked = true;
+                  candidateInput.style.visibility = 'visible';
+                } else {
+                  candidate.checked = false;
+                  candidateInput.style.visibility = 'hidden';
+                }
+              }
+            }
         });
+
         this.filterList = sessionState.appliedFilters
     } else {
       console.log('no state set yet');

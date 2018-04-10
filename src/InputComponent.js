@@ -20,31 +20,6 @@ class InputComponent extends Component {
     }
   }
 
-  componentDidMount(){
-    // const baseArr =  document.querySelectorAll('.toggleInput');
-    // for (let i in baseArr) {
-    //   let candidate = baseArr[i];
-    //   if(candidate.id){
-    //     const key = String(candidate.id.trim().replace(' ', '_').toLowerCase());
-    //     const baseline = JSON.parse(sessionStorage.myState);
-    //     console.log(baseline.inputs[key]);
-    //     if (baseline.inputs[key] !== '') {
-    //       candidate.checked = true;
-    //     } else {
-    //       candidate.checked = false;
-    //     }
-    //   }
-    //   // if(candidate.checked){
-    //   //     this.props.filterList.indexOf(candidate.id) > -1 ? candidate.checked = true : candidate.checked = false
-    //   // }
-    // }
-    // for (let field in document.querySelectorAll('input[type=text]')){
-    //   console.log(field);
-    //   debugger;
-    //   field.value !== '' ? field.style.visibility : !field.style.visibility
-    // }
-  }
-
   handleChange(e) {
     this.props.methods.updateValues(e.target.previousSibling.nodeValue, e.target.value);
   }
@@ -55,7 +30,7 @@ class InputComponent extends Component {
         <form name='filterInputs'>
           <h2>Filter by:</h2>
           <p>
-            <input type='checkbox' className='toggleInput' id='first_name' value='enableFirstName' onChange={this.toggleInput} /> First Name <input type='text' className='inputToggle' value={this.props.material.inputs.first_name} onChange={this.handleChange} />
+            <input type='checkbox' className='toggleInput' id='first_name' value='enableFirstName' onChange={this.toggleInput} /> First Name <input type='text' name='fn' className='inputToggle' value={this.props.material.inputs.first_name} onChange={this.handleChange} />
           </p>
           <p>
             <input type='checkbox'  id='last_name' className='toggleInput' value='enableLasttName' onChange={this.toggleInput} /> Last Name <input type='text' className='inputToggle' value={this.props.material.inputs.last_name} onChange={this.handleChange} />
